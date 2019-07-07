@@ -1,3 +1,3 @@
 class Batch < ApplicationRecord
-  has_many :orders, dependent: :destroy
+  has_and_belongs_to_many :orders
 end

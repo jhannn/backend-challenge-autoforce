@@ -6,6 +6,8 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+batch = Batch.create({reference: '201803-54', purchase_channel: 'netshoes.com.br'})
+
 5.times  do
     line_items = []
     3.times  do
@@ -17,8 +19,10 @@
         client_name: Faker::Name.name,
         address: Faker::Address.full_address,
         delivery_service: Faker::Company.name,
-        total_value: Faker::Number.decimal(2),
+        total_value: Faker::Number.decimal(5, 2),
         line_items: line_items,
-        status: Faker::Name.first_name
-	})
+        status: 'ready'
+    })
 end
+
+batch.orders.create(reference: 'BR102030', purchase_channel: 'netshoes.com.br', client_name: 'São Clênio', address: 'Av. Amintas Barros Nº 3700 - Torre Business, Sala 702 - Lagoa Nova CEP: 59075-250', delivery_service: 'SEDEX', total_value: '123.30', line_items: [], status: 'ready')
