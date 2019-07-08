@@ -4,7 +4,7 @@ class Api::V1::OrdersController < ApplicationController
     # Create a new Order
     # POST /api/v1/orders
     def create
-        @order = Order.new(order_params.merge(status: 'ready'))
+        @order = Order.new(order_params.merge(status: 'ready', line_items: JSON.parse(params[:line_items])))
         if @order.save
             render json: @order, status: :created
         else
@@ -13,8 +13,8 @@ class Api::V1::OrdersController < ApplicationController
     end
 
     # Get the status of an Order
-    # GET /api/v1/orders/getStatus
-    def getStatus
+    # GET /api/v1/orders/status
+    def status
         if params[:reference]
             @orders = Order.where(["reference = ?", params[:reference]])
         elsif params[:client_name]

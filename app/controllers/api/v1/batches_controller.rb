@@ -1,20 +1,26 @@
 class Api::V1::BatchesController < Api::V1::ApiController
-    after_action :set_orders_sent, only: [:sentBatch]
+    after_action :set_orders_sent, only: [:sent]
       
     # Create a Batch
     # POST /api/v1/batches
     def create
         orders = []
         if params[:orders] && !params[:orders].blank? && params[:purchase_channel] && !params[:purchase_channel].blank?
-            params[:orders].each do |order_reference|
-                order = Order.find_by(reference: order_reference)
+            JSON.parse(params[:orders]).each do |order|
+                order = Order.find_by(reference: order['reference'])
                 if order.purchase_channel == params[:purchase_channel] && order.status == 'ready'
                     orders << order
                 end
             end
             if orders.count > 0
                 last_batch = Batch.last
-                @batch = Batch.new(batch_params.merge(orders: orders, reference: Time.now.strftime("%Y%m") + '-' + ((last_batch.id+1).to_s)))
+                last_batch_id = 0
+                if  last_batch === nil
+                    last_batch_id = 0
+                else
+                    last_batch_id = last_batch.id
+                end
+                @batch = Batch.new(batch_params.merge(orders: orders, reference: Time.now.strftime("%Y%m") + '-' + ((last_batch_id + 1).to_s)))
                 if @batch.save
                     @batch.orders.each do |order|
                         order.update_attribute(:status, 'production')
@@ -33,8 +39,8 @@ class Api::V1::BatchesController < Api::V1::ApiController
     end
 
     # Produce a Batch
-    # PATCH /api/v1/batches/produceBatch
-    def produceBatch
+    # PATCH /api/v1/batches/produce
+    def produce
         if params[:reference] && !params[:reference].blank?
             @batch = Batch.find_by(reference: params[:reference])
             if @batch == nil
@@ -53,8 +59,8 @@ class Api::V1::BatchesController < Api::V1::ApiController
     end
 
     # Close part of a Batch for a Delivery Service
-    # PATCH /api/v1/batches/sentBatch
-    def sentBatch
+    # PATCH /api/v1/batches/sent
+    def sent
         if params[:reference] && !params[:reference].blank? && params[:delivery_service] && !params[:delivery_service].blank?
             @batch = Batch.find_by(reference: params[:reference])
             if @batch == nil
@@ -84,7 +90,8 @@ class Api::V1::BatchesController < Api::V1::ApiController
         end
 
         def set_orders_sent
-            orders = Order.where(["delivery_service = ? AND status = ?", params[:delivery_service], 'closing'])
+            puts 'passou'
+            orders = Order.where(["delivery_service = ? AND status = ?", params[:delivery_service].downcase, 'closing'])
             orders.each do |order|
                 order.update_attribute(:status, 'sent')
             end

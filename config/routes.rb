@@ -3,12 +3,12 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :orders do
         collection do
-          get 'pipeline', 'getStatus', 'financialReport'
+          get 'pipeline', 'status', 'financialReport'
         end
       end
       resources :batches do
         collection do
-          patch 'produceBatch', 'sentBatch'
+          patch 'produce', 'sent'
         end
       end
     end

@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 20190706031549) do
     t.text "address"
     t.string "delivery_service"
     t.float "total_value"
-    t.text "line_items", array: true
+    t.json "line_items", array: true
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
