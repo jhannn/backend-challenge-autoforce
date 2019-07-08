@@ -84,6 +84,7 @@ GEM
     nokogiri (1.10.3-x86-mingw32)
       mini_portile2 (~> 2.4.0)
     pg (0.21.0-x86-mingw32)
+    public_suffix (4.0.0)
     puma (3.12.1)
     rack (2.0.7)
     rack-attack (6.0.0)
@@ -147,6 +148,9 @@ GEM
       thread_safe (~> 0.1)
     tzinfo-data (1.2019.2)
       tzinfo (>= 1.0.0)
+    validate_url (1.0.8)
+      activemodel (>= 3.0.0)
+      public_suffix
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.4)
@@ -169,6 +173,7 @@ DEPENDENCIES
   rspec-rails (~> 3.5)
   shoulda-matchers (~> 3.1)
   tzinfo-data
+  validate_url
 
 BUNDLED WITH
    2.0.2

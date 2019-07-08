@@ -8,7 +8,6 @@ Rails.application.routes.draw do
       end
       resources :batches do
         collection do
-          get 'orders'
           patch 'produceBatch', 'sentBatch'
         end
       end
