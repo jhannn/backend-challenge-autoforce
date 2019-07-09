@@ -1,4 +1,4 @@
-class Api::V1::OrdersController < ApplicationController
+class Api::V1::OrdersController < Api::V1::ApiController
 
     # Order is valid and if it was persisted correctly 
     # Create a new Order

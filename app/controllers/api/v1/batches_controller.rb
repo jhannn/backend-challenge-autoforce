@@ -90,7 +90,6 @@ class Api::V1::BatchesController < Api::V1::ApiController
         end
 
         def set_orders_sent
-            puts 'passou'
             orders = Order.where(["delivery_service = ? AND status = ?", params[:delivery_service].downcase, 'closing'])
             orders.each do |order|
                 order.update_attribute(:status, 'sent')
