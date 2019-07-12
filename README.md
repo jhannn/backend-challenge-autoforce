@@ -18,7 +18,7 @@
 
  Pode-se criar uma UI com a tecnologia React e fazer a UI consumir os dados de um servidor que utilize da tecnologia API GraphQL, tendo o foco maior do servidor de persistir os dados, tendo toda a parte de negócio e de cliente na UI feita em React, que por sua vez terá que utilizar as bibliotecas Apollo e graphql-tag para permitir a manipulação do GraphQL.
 	
-# O que falto melhorar na minha opinião
+# O que faltou melhorar na minha opinião
 -> Pelo fato de não saber nada de Rails e de Ruby, tive que aprender tudo sobre eles nessa semana e com a falta de experiência da linguagem, sem dúvidas deve ter várias formas melhores de resolver o desafio, do a forma que propus, só utilizando algumas ferramentas da linguagem. Portanto deveria fazer uma refatoração do código depois de estudar um pouco mais da linguagem. 
 
 -> Não entendi se era para pegar os status de Order em real-time, se foi pedido, deveria atualizar o endpoint para permitir a conexão real-time e retornar o status de Orders de forma contínua.
