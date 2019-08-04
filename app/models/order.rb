@@ -11,6 +11,5 @@ class Order < ApplicationRecord
         self.client_name.downcase!
         self.address.downcase!
         self.delivery_service.downcase!
-        self.status.downcase!
     end
 end

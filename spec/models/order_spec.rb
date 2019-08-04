@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Order, type: :model do
-  let(:order) {build(:order)}
+  let(:order) {build(:order, status: 'ready')}
 
   it {expect(order).to respond_to(:reference)}
   it {expect(order).to respond_to(:purchase_channel)}
@@ -37,7 +37,7 @@ RSpec.describe Order, type: :model do
   end
 
   describe 'validations' do
-    # it {should validate_uniqueness_of(:reference).case_insensitive}
+    #it {should validate_uniqueness_of(:reference)}
     it {should validate_numericality_of(:total_value)}
   end
 

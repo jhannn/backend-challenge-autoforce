@@ -81,6 +81,7 @@ class Api::V1::BatchesController < Api::V1::ApiController
     # GET /api/v1/batches
     def index
         @batches = Batch.all
+        render json: @batches, status: :ok
     end
 
     private
@@ -90,9 +91,11 @@ class Api::V1::BatchesController < Api::V1::ApiController
         end
 
         def set_orders_sent
-            orders = Order.where(["delivery_service = ? AND status = ?", params[:delivery_service].downcase, 'closing'])
-            orders.each do |order|
-                order.update_attribute(:status, 'sent')
+            if params[:delivery_service] && !params[:delivery_service].blank?
+                orders = Order.where(["delivery_service = ? AND status = ?", params[:delivery_service].downcase, 'closing'])
+                orders.each do |order|
+                    order.update_attribute(:status, 'sent')
+                end
             end
         end
 end

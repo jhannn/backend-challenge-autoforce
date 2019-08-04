@@ -4,7 +4,7 @@ class Api::V1::OrdersController < Api::V1::ApiController
     # Create a new Order
     # POST /api/v1/orders
     def create
-        @order = Order.new(order_params.merge(status: 'ready', line_items: JSON.parse(params[:line_items])))
+        @order = Order.new(order_params.merge(status: 'ready'))
         if @order.save
             render json: @order, status: :created
         else
@@ -24,6 +24,7 @@ class Api::V1::OrdersController < Api::V1::ApiController
             render json: {error: "bad parameters"}, status: :bad_request
             return
         end
+        render json: @orders, status: :ok
     end    
 
     # List the Orders of a Purchase Channel
@@ -32,6 +33,7 @@ class Api::V1::OrdersController < Api::V1::ApiController
         if params[:purchase_channel] && params[:status]
             @orders = Order.where(["purchase_channel = ? AND status = ?", params[:purchase_channel].downcase, params[:status].downcase])
             @orders = @orders.page(params[:page] || 1).per(params[:per_page] || 10)
+            render json: @orders, status: :ok
         else
             render json: {error: "bad parameters"}, status: :bad_request
             return
@@ -54,6 +56,7 @@ class Api::V1::OrdersController < Api::V1::ApiController
     # GET /api/v1/orders
     def index
         @orders = Order.all
+        render json: @orders, status: :ok
     end
 
     private

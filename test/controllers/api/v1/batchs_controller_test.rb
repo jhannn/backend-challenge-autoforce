@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class BatchsControllerTest < ActionDispatch::IntegrationTest
+class Api::V1::BatchsControllerTest < ActionDispatch::IntegrationTest
   # test "the truth" do
   #   assert true
   # end
